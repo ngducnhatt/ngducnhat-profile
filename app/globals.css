@@ -30,3 +30,25 @@
     --sh-property: #73daca;
     --sh-entity: #e0af68;
 }
+
+@layer base {
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+        -webkit-text-fill-color: inherit;
+        box-shadow: 0 0 0 1000px rgb(248 250 252 / 0.9) inset;
+        transition: background-color 10000s ease-in-out 0s;
+        caret-color: inherit;
+    }
+
+    .dark input:-webkit-autofill,
+    .dark input:-webkit-autofill:hover,
+    .dark input:-webkit-autofill:focus,
+    .dark textarea:-webkit-autofill,
+    .dark select:-webkit-autofill {
+        box-shadow: 0 0 0 1000px rgb(9 9 11 / 0.85) inset;
+        -webkit-text-fill-color: rgb(250 250 250);
+    }
+}

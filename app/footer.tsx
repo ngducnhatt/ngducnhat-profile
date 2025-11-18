@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 
 import { AnimatedBackground } from '@/components/motion-primitives/animated-background'
-import { TextLoop } from '@/components/motion-primitives/text-loop'
 
 const THEMES_OPTIONS = [
     {
@@ -71,14 +70,8 @@ function ThemeSwitch() {
 export function Footer() {
     return (
         <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
-            <div className="flex items-center justify-between">
-                <a href="https://github.com/ibelick/nim" target="_blank">
-                    <TextLoop className="text-xs text-zinc-500">
-                        <span>© 2025 Ngducnhat.</span>
-                        <span>Chilling</span>
-                        <span>Zzz</span>
-                    </TextLoop>
-                </a>
+            <div className="mb-8 flex items-center justify-between">
+                     <span className="text-xs text-zinc-500">© 2025 Ngducnhat</span>
                 <div className="text-xs text-zinc-400">
                     <ThemeSwitch />
                 </div>

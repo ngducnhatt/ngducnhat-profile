@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Footer } from './footer'
 import './globals.css'
-import { Header } from './header'
+import { AuthProvider } from '@/components/providers/auth-provider'
 
 export const viewport: Viewport = {
     width: 'device-width',
@@ -50,13 +50,14 @@ const RootLayout = ({
                     storageKey="theme"
                     defaultTheme="system"
                 >
-                    <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-                        <div className="relative mx-auto w-full max-w-screen-md flex-1 px-4 pt-20">
-                            <Header />
-                            {children}
-                            <Footer />
+                    <AuthProvider>
+                        <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)] bg-white dark:bg-zinc-950">
+                            <main className="flex-1">{children}</main>
+                            <div className="mx-auto w-full max-w-screen-2xl px-4 pb-12 pt-16">
+                                <Footer />
+                            </div>
                         </div>
-                    </div>
+                    </AuthProvider>
                 </ThemeProvider>
             </body>
         </html>
