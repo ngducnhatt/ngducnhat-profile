@@ -120,7 +120,7 @@ function MagneticSocialLink({
     )
 }
 
-const Personal = () => {
+const HomePage = () => {
     return (
         <motion.main
             className="space-y-24"
@@ -278,4 +278,4 @@ const Personal = () => {
     )
 }
 
-export default Personal
+export default HomePage
