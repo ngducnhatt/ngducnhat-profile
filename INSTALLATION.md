@@ -9,40 +9,40 @@
 
 1. **Clone the repository**
 
-   ```bash
-   git clone https://github.com/ibelick/nim.git
-   cd nim
-   ```
+    ```bash
+    git clone https://github.com/ibelick/nim.git
+    cd nim
+    ```
 
 2. **Install dependencies**
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 3. **Run the development server**
 
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    npm run dev
+    ```
 
 4. **Update the template data**
 
-   Update the template data in the `app/data.ts` file.
+    Update the template data in the `app/data.ts` file.
 
-   ```ts
-   export const EMAIL = 'your@email.com'
+    ```ts
+    export const EMAIL = 'your@email.com'
 
-   export const SOCIAL_LINKS = [
-     {
-       label: 'Github',
-       link: 'your-github-url',
-     },
-     // Add your social links
-   ]
+    export const SOCIAL_LINKS = [
+      {
+        label: 'Github',
+        link: 'your-github-url',
+      },
+      // Add your social links
+    ]
 
-   ...
-   ```
+    ...
+    ```
 
 5. **Add your blog posts**
 
