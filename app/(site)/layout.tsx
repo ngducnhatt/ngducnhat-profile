@@ -1,12 +1,15 @@
 import type { ReactNode } from 'react'
 
 import { Header } from '@/app/header'
+import { Footer } from '@/app/footer'
 
 const SiteLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <div className="relative mx-auto w-full max-w-screen-md px-4 pt-20">
+        <div className="relative mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 pt-16">
             <Header />
-            {children}
+            <div className="flex-1 w-full">{children}</div>
+            <Footer />
+
         </div>
     )
 }

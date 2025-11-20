@@ -5,7 +5,6 @@ import { FormEvent, useMemo, useState } from 'react'
 
 import { UsersRound } from 'lucide-react'
 
-import { TextEffect } from '@/components/motion-primitives/text-effect'
 import { useAuth } from '@/components/providers/auth-provider'
 import { cn } from '@/lib/utils'
 
@@ -24,7 +23,11 @@ const UsersPage = () => {
     ])
     const [search, setSearch] = useState('')
     const [editingId, setEditingId] = useState<string | null>(null)
-    const [form, setForm] = useState({ email: '', role: 'user' as 'admin' | 'user', status: 'active' as ManagedUser['status'] })
+    const [form, setForm] = useState({
+        email: '',
+        role: 'user' as 'admin' | 'user',
+        status: 'active' as ManagedUser['status'],
+    })
 
     const filteredUsers = useMemo(() => {
         return users.filter((user) => user.email.toLowerCase().includes(search.toLowerCase()))
@@ -43,11 +46,7 @@ const UsersPage = () => {
         if (!form.email) return
 
         if (editingId) {
-            setUsers((prev) =>
-                prev.map((user) =>
-                    user.id === editingId ? { ...user, ...form } : user,
-                ),
-            )
+            setUsers((prev) => prev.map((user) => (user.id === editingId ? { ...user, ...form } : user)))
             setEditingId(null)
         } else {
             setUsers((prev) => [
@@ -72,27 +71,79 @@ const UsersPage = () => {
     }
 
     return (
-        <div className="space-y-8">
-            <div className="flex items-center justify-between">
+        <div className="space-y-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1
-                        className="text-3xl font-semibold text-white"
-                    >
-                        Quản lý người dùng
-                    </h1>
+                    <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">Người dùng</p>
+                    <h1 className="text-3xl font-semibold text-white">Quản lý người dùng</h1>
                     <p className="mt-2 text-sm text-zinc-500">
-                        CRUD đầy đủ: tạo mới, chỉnh sửa quyền và trạng thái tài khoản.
+                        CRUD đơn giản: tạo mới, chỉnh sửa quyền và trạng thái tài khoản.
                     </p>
                 </div>
-                <span className="rounded-full border border-white/10 px-4 py-1 text-xs uppercase tracking-[0.4em] text-zinc-500">
+                <span className="inline-flex items-center rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.4em] text-zinc-500">
                     {users.length} tài khoản
                 </span>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+                <motion.section
+                    className="order-1 rounded-[32px] border border-white/10 bg-black/40 p-5 backdrop-blur lg:order-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 }}
+                >
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <h2 className="text-lg font-semibold text-white">Danh sách</h2>
+                        <input
+                            type="text"
+                            placeholder="Tìm theo email..."
+                            className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-white/40 focus:outline-none sm:w-64"
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
+                        />
+                    </div>
+                    <div className="mt-6 space-y-3">
+                        {filteredUsers.map((user) => (
+                            <motion.div
+                                key={user.id}
+                                className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
+                                layout
+                            >
+                                <div>
+                                    <p className="font-semibold">{user.email}</p>
+                                    <p className="text-xs text-zinc-400">
+                                        {user.role.toUpperCase()} · {user.status}
+                                    </p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button
+                                        className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-200 transition hover:border-white/30"
+                                        type="button"
+                                        onClick={() => handleEdit(user)}
+                                    >
+                                        Sửa
+                                    </button>
+                                    <button
+                                        className="rounded-full border border-red-500/50 px-3 py-1 text-xs text-red-200 transition hover:bg-red-500/10"
+                                        type="button"
+                                        onClick={() => handleDelete(user.id)}
+                                    >
+                                        Xóa
+                                    </button>
+                                </div>
+                            </motion.div>
+                        ))}
+                        {!filteredUsers.length && (
+                            <p className="rounded-3xl border border-white/10 bg-black/40 py-6 text-center text-sm text-zinc-400">
+                                Không tìm thấy người dùng phù hợp.
+                            </p>
+                        )}
+                    </div>
+                </motion.section>
+
                 <motion.form
                     onSubmit={handleSubmit}
-                    className="rounded-[32px] border border-white/10 bg-white/5 p-6 backdrop-blur"
+                    className="order-2 rounded-[32px] border border-white/10 bg-white/5 p-5 backdrop-blur lg:order-1"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                 >
@@ -123,8 +174,8 @@ const UsersPage = () => {
                                     setForm((prev) => ({ ...prev, role: event.target.value as 'admin' | 'user' }))
                                 }
                             >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
+                                <option value="user">Người dùng</option>
+                                <option value="admin">Quản trị viên</option>
                             </select>
                         </label>
                         <label className="block">
@@ -139,9 +190,9 @@ const UsersPage = () => {
                                     }))
                                 }
                             >
-                                <option value="active">Active</option>
-                                <option value="invited">Invited</option>
-                                <option value="blocked">Blocked</option>
+                                <option value="active">Hoạt động</option>
+                                <option value="invited">Đã mời</option>
+                                <option value="blocked">Đã chặn</option>
                             </select>
                         </label>
                     </div>
@@ -166,61 +217,6 @@ const UsersPage = () => {
                         )}
                     </div>
                 </motion.form>
-
-                <motion.section
-                    className="rounded-[32px] border border-white/10 bg-black/40 p-6 backdrop-blur"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <h2 className="text-lg font-semibold text-white">Danh sách</h2>
-                        <input
-                            type="text"
-                            placeholder="Tìm theo email…"
-                            className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-white/40 focus:outline-none sm:w-64"
-                            value={search}
-                            onChange={(event) => setSearch(event.target.value)}
-                        />
-                    </div>
-                    <div className="mt-6 space-y-3">
-                        {filteredUsers.map((user) => (
-                            <motion.div
-                                key={user.id}
-                                className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
-                                layout
-                            >
-                                <div>
-                                    <p className="font-semibold">{user.email}</p>
-                                    <p className="text-xs text-zinc-400">
-                                        {user.role.toUpperCase()} • {user.status}
-                                    </p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <button
-                                        className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-200 transition hover:border-white/30"
-                                        type="button"
-                                        onClick={() => handleEdit(user)}
-                                    >
-                                        Sửa
-                                    </button>
-                                    <button
-                                        className="rounded-full border border-red-500/50 px-3 py-1 text-xs text-red-200 transition hover:bg-red-500/10"
-                                        type="button"
-                                        onClick={() => handleDelete(user.id)}
-                                    >
-                                        Xoá
-                                    </button>
-                                </div>
-                            </motion.div>
-                        ))}
-                        {!filteredUsers.length && (
-                            <p className="rounded-3xl border border-white/10 bg-black/40 py-6 text-center text-sm text-zinc-400">
-                                Không tìm thấy người dùng phù hợp.
-                            </p>
-                        )}
-                    </div>
-                </motion.section>
             </div>
         </div>
     )

@@ -5,7 +5,6 @@ import { FormEvent, useState } from 'react'
 
 import { Lock } from 'lucide-react'
 
-import { TextEffect } from '@/components/motion-primitives/text-effect'
 import { useAuth } from '@/components/providers/auth-provider'
 import { getSupabaseClient } from '@/lib/supabase-client'
 import { cn } from '@/lib/utils'
@@ -28,7 +27,7 @@ const ChangePasswordPage = () => {
         }
         if (newPassword.length < 6) {
             setStatus('error')
-            setMessage('Mật khẩu phải lớn hơn 6 kí tự.')
+            setMessage('Mật khẩu phải dài hơn 6 ký tự.')
             return
         }
 
@@ -40,7 +39,7 @@ const ChangePasswordPage = () => {
 
         try {
             setStatus('loading')
-            setMessage('Đang cập nhật mật khẩu…')
+            setMessage('Đang cập nhật mật khẩu...')
 
             const { error: signInError } = await supabase.auth.signInWithPassword({
                 email: user.email,
@@ -71,25 +70,22 @@ const ChangePasswordPage = () => {
     }
 
     return (
-        <div className="space-y-8">
-            <div className="flex items-center justify-between">
+        <div className="space-y-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1
-                        className="text-3xl font-semibold text-white"
-                    >
-                        Đổi mật khẩu
-                    </h1>
+                    <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">Bảo mật</p>
+                    <h1 className="text-3xl font-semibold text-white">Đổi mật khẩu</h1>
                     <p className="mt-2 text-sm text-zinc-500">
-                        Bảo mật tài khoản Supabase Auth trực tiếp từ dashboard.
+                        Cập nhật mật khẩu Supabase Auth trực tiếp từ bảng điều khiển.
                     </p>
                 </div>
-                <span className="rounded-full border border-white/10 px-4 py-1 text-xs uppercase tracking-[0.4em] text-zinc-500">
+                <span className="inline-flex items-center rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-zinc-500">
                     {user?.email}
                 </span>
             </div>
 
             <motion.form
-                className="rounded-[32px] border border-white/10 bg-white/5 p-6 backdrop-blur"
+                className="rounded-[32px] border border-white/10 bg-white/5 p-5 backdrop-blur sm:p-6"
                 onSubmit={handleSubmit}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -138,7 +134,7 @@ const ChangePasswordPage = () => {
                     className="mt-6 flex w-full items-center justify-center rounded-2xl bg-white py-3 text-base font-semibold text-zinc-900 transition hover:bg-zinc-100"
                     disabled={status === 'loading'}
                 >
-                    {status === 'loading' ? 'Đang cập nhật…' : 'Đổi mật khẩu'}
+                    {status === 'loading' ? 'Đang cập nhật...' : 'Đổi mật khẩu'}
                 </button>
                 {message && (
                     <p
@@ -146,7 +142,7 @@ const ChangePasswordPage = () => {
                             'mt-4 rounded-2xl border px-4 py-3 text-sm',
                             status === 'error'
                                 ? 'border-red-500/40 bg-red-500/10 text-red-100'
-                                : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-100',
+                                : 'border-slate-300/80 bg-slate-100 text-slate-700 dark:border-white/20 dark:bg-white/10 dark:text-white',
                         )}
                     >
                         {message}

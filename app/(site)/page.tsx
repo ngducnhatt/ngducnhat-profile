@@ -123,7 +123,7 @@ function MagneticSocialLink({
 const HomePage = () => {
     return (
         <motion.main
-            className="space-y-24"
+            className="mx-auto flex w-full max-w-3xl flex-col space-y-24"
             variants={VARIANTS_CONTAINER}
             initial="hidden"
             animate="visible"
