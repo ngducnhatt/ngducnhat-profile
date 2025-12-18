@@ -5,7 +5,6 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const redirect_uri = 'https://ngducnhat.vercel.app/api/spotify-auth/callback';
 
 export async function GET() {
-    console.log('Spotify client_id:', client_id);
     const scope = 'user-read-currently-playing user-read-recently-played';
     return NextResponse.redirect(
         'https://accounts.spotify.com/authorize?' +

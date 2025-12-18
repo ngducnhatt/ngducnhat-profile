@@ -6,7 +6,6 @@ const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = 'https://ngducnhat.vercel.app/api/spotify-auth/callback';
 
 export async function GET(req: NextRequest) {
-    console.log('Callback route hit');
     const { searchParams } = new URL(req.url);
     const code = searchParams.get('code') || null;
     const error = searchParams.get('error') || null;

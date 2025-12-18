@@ -2,7 +2,6 @@
 import { XIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
-
 import Link from "next/link";
 
 import { AnimatedBackground } from "@/components/motion-primitives/animated-background";
@@ -15,14 +14,9 @@ import {
 	MorphingDialogTrigger,
 } from "@/components/motion-primitives/morphing-dialog";
 import { Spotlight } from "@/components/motion-primitives/spotlight";
-import { SpotifyNowPlaying } from "@/components/spotify-now-playing/spotify-now-playing";
+import { Spotify } from "@/components/home/spotify";
 
-import {
-	EMAIL,
-	PROJECTS,
-	SOCIAL_LINKS,
-	WORK_EXPERIENCE,
-} from "./data";
+import { EMAIL, PROJECTS, SOCIAL_LINKS, WORK_EXPERIENCE } from "./data";
 
 const VARIANTS_CONTAINER = {
 	hidden: { opacity: 0 },
@@ -192,13 +186,14 @@ const HomePageClient = () => {
 							</div>
 							<div className="px-1">
 								<a
-								    className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
-								    href={project.link}
-								    target="_blank"
-								    rel="noopener noreferrer">
-								    {project.name}
-								    <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 dark:bg-zinc-50 transition-all duration-200 group-hover:max-w-full"></span>
-								</a>								<p className="text-base text-zinc-600 dark:text-zinc-400">
+									className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
+									href={project.link}
+									target="_blank"
+									rel="noopener noreferrer">
+									{project.name}
+									<span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 dark:bg-zinc-50 transition-all duration-200 group-hover:max-w-full"></span>
+								</a>{" "}
+								<p className="text-base text-zinc-600 dark:text-zinc-400">
 									{project.description}
 								</p>
 							</div>
@@ -243,7 +238,6 @@ const HomePageClient = () => {
 				</div>
 			</motion.section>
 
-
 			<motion.section
 				variants={VARIANTS_SECTION}
 				transition={TRANSITION_SECTION}>
@@ -252,8 +246,7 @@ const HomePageClient = () => {
 					Mail to me{" "}
 					<button
 						className="dark:text-zinc-300"
-						onClick={handleEmailClick}
-					>
+						onClick={handleEmailClick}>
 						{EMAIL}
 					</button>
 					{showCopied && (
@@ -274,7 +267,7 @@ const HomePageClient = () => {
 				variants={VARIANTS_SECTION}
 				transition={TRANSITION_SECTION}>
 				<h3 className="mb-5 text-lg font-medium">Spotify</h3>
-				<SpotifyNowPlaying />
+				<Spotify />
 			</motion.section>
 		</motion.main>
 	);
