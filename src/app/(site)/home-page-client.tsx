@@ -15,6 +15,7 @@ import {
 	MorphingDialogTrigger,
 } from "@/components/motion-primitives/morphing-dialog";
 import { Spotlight } from "@/components/motion-primitives/spotlight";
+import { SpotifyNowPlaying } from "@/components/spotify-now-playing/spotify-now-playing";
 
 import {
 	EMAIL,
@@ -272,7 +273,8 @@ const HomePageClient = () => {
 			<motion.section
 				variants={VARIANTS_SECTION}
 				transition={TRANSITION_SECTION}>
-				<h3 className="mb-5 text-lg font-medium">Sportify</h3>
+				<h3 className="mb-5 text-lg font-medium">Spotify</h3>
+				<SpotifyNowPlaying />
 			</motion.section>
 		</motion.main>
 	);
