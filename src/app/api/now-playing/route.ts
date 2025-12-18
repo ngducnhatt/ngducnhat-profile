@@ -21,7 +21,7 @@ const getAccessToken = async () => {
     return response.json();
 };
 
-export const getNowPlaying = async () => {
+const getNowPlaying = async () => {
     const { access_token } = await getAccessToken();
 
     return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
@@ -31,7 +31,7 @@ export const getNowPlaying = async () => {
     });
 };
 
-export const getRecentlyPlayed = async () => {
+const getRecentlyPlayed = async () => {
     const { access_token } = await getAccessToken();
 
     return fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
