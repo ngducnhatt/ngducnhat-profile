@@ -1,10 +1,11 @@
 "use client";
+import { motion } from "framer-motion";
 import useSWR from "swr";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 import { Tilt } from "@/components/motion-primitives/tilt";
 
-export function Spotify() {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+function SpotifyPlayer() {
 	const { data, error, isLoading } = useSWR("/api/now-playing", fetcher, {
 		refreshInterval: 5000,
 	});
@@ -30,5 +31,14 @@ export function Spotify() {
 					title="Spotify Player"></iframe>
 			</div>
 		</Tilt>
+	);
+}
+
+export default function SpotifySection({ variants, transition }: { variants: any; transition: any }) {
+	return (
+		<motion.section variants={variants} transition={transition}>
+			<h3 className="mb-5 text-lg font-medium">Spotify</h3>
+			<SpotifyPlayer />
+		</motion.section>
 	);
 }
