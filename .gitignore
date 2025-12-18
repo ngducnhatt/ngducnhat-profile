@@ -39,4 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-eslint.config.mjs
+eslint.config.mjs.env.local
