@@ -1,21 +1,16 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-const EMAIL = "nhaatjisme@gmail.com";
-const SOCIAL_LINKS = [
-	{
-		label: "Github",
-		link: "https://github.com/ngducnhatt",
-	},
-	{
-		label: "LinkedIn",
-		link: "#",
-	},
-	{
-		label: "Facebook",
-		link: "#",
-	},
-];
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+function useSiteInfo() {
+	return useSWR<{
+		email: string;
+		social_links: { label: string; link: string }[];
+	}>("/api/data/site", fetcher);
+}
 import { Magnetic } from "@/components/motion-primitives/magnetic";
 
 function SocialLink({ label, link }: { label: string; link: string }) {
@@ -32,12 +27,20 @@ function SocialLink({ label, link }: { label: string; link: string }) {
 	);
 }
 
-export default function ContactSection({ variants, transition }: { variants: any; transition: any }) {
+export default function ContactSection({
+	variants,
+	transition,
+}: {
+	variants: any;
+	transition: any;
+}) {
+	const { data, error } = useSiteInfo();
 	const [copied, setCopied] = useState(false);
 
 	const copyEmail = async () => {
+		if (!data?.email) return;
 		try {
-			await navigator.clipboard.writeText(EMAIL);
+			await navigator.clipboard.writeText(data.email);
 			setCopied(true);
 		} catch {}
 	};
@@ -54,7 +57,7 @@ export default function ContactSection({ variants, transition }: { variants: any
 			<p className="mb-5 text-zinc-600 dark:text-zinc-400">
 				Mail to me{" "}
 				<button onClick={copyEmail} className="underline">
-					{EMAIL}
+					{data?.email}
 				</button>
 				{copied && (
 					<span className="ml-2 rounded-full bg-zinc-200 px-2 py-1 text-xs">
@@ -63,7 +66,7 @@ export default function ContactSection({ variants, transition }: { variants: any
 				)}
 			</p>
 			<div className="flex gap-3">
-				{SOCIAL_LINKS.map((s) => (
+				{data?.social_links.map((s) => (
 					<SocialLink key={s.label} {...s} />
 				))}
 			</div>

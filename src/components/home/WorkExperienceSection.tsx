@@ -1,7 +1,7 @@
 "use client";
 import { Spotlight } from "@/components/motion-primitives/spotlight";
 import { useEffect, useState } from "react";
-import { fetchWork, Work } from "@/lib/data";
+import { Work } from "@/lib/data";
 import { motion } from "framer-motion";
 
 type Props = {
@@ -11,14 +11,31 @@ type Props = {
 
 export default function WorkExperienceSection({ variants, transition }: Props) {
 	const [works, setWork] = useState<Work[]>([]);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const getWork = async () => {
-			const data = await fetchWork();
-			if (data) {
-				// Sort the data by id in ascending order
-				const sortedData = data.sort((a, b) => a.id - b.id);
-				setWork(sortedData);
+			try {
+				const res = await fetch("/api/data/works");
+				if (!res.ok) {
+					const errorData = await res.json();
+					setError(
+						errorData.error || "Failed to load work experience",
+					);
+					return;
+				}
+				const data = (await res.json()) as Work[];
+				if (data && data.length > 0) {
+					const sortedData = data.sort((a, b) => a.id - b.id);
+					setWork(sortedData);
+				}
+			} catch (err) {
+				console.error("Failed to load work experience:", err);
+				setError(
+					err instanceof Error
+						? err.message
+						: "Failed to load work experience",
+				);
 			}
 		};
 		getWork();
@@ -27,6 +44,11 @@ export default function WorkExperienceSection({ variants, transition }: Props) {
 	return (
 		<motion.section variants={variants} transition={transition}>
 			<h3 className="mb-5 text-lg font-medium">Work Experience</h3>
+			{error && (
+				<div className="mb-4 rounded bg-red-100 p-3 text-sm text-red-800 dark:bg-red-900 dark:text-red-200">
+					{error}
+				</div>
+			)}
 			<div className="flex flex-col space-y-2">
 				{works?.map((job: Work) => (
 					<a

@@ -6,9 +6,13 @@ import { Tilt } from "@/components/motion-primitives/tilt";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 function SpotifyPlayer() {
-	const { data, error, isLoading } = useSWR("/api/now-playing", fetcher, {
-		refreshInterval: 5000,
-	});
+	const { data, error, isLoading } = useSWR(
+		"/api/spotify/now-playing",
+		fetcher,
+		{
+			refreshInterval: 5000,
+		},
+	);
 
 	if (error) return <div>Failed to load Spotify data</div>;
 	if (isLoading) return <div>Loading Spotify data...</div>;
@@ -34,7 +38,13 @@ function SpotifyPlayer() {
 	);
 }
 
-export default function SpotifySection({ variants, transition }: { variants: any; transition: any }) {
+export default function SpotifySection({
+	variants,
+	transition,
+}: {
+	variants: any;
+	transition: any;
+}) {
 	return (
 		<motion.section variants={variants} transition={transition}>
 			<h3 className="mb-5 text-lg font-medium">Spotify</h3>

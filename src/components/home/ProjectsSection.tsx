@@ -12,7 +12,7 @@ import {
 } from "@/components/motion-primitives/morphing-dialog";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { fetchProjects, Project } from "@/lib/data";
+import { Project } from "@/lib/data";
 
 type Props = {
 	variants: any;
@@ -21,14 +21,28 @@ type Props = {
 
 export default function ProjectsSection({ variants, transition }: Props) {
 	const [projects, setProjects] = useState<Project[]>([]);
-
+	const [error, setError] = useState<string | null>(null);
 	useEffect(() => {
 		const getProjects = async () => {
-			const data = await fetchProjects();
-			if (data) {
-				// Sort the data by id in ascending order
-				const sortedData = data.sort((a, b) => a.id - b.id);
-				setProjects(sortedData);
+			try {
+				const res = await fetch("/api/data/projects");
+				if (!res.ok) {
+					const errorData = await res.json();
+					setError(errorData.error || "Failed to load projects");
+					return;
+				}
+				const data = (await res.json()) as Project[];
+				if (data && data.length > 0) {
+					const sortedData = data.sort((a, b) => a.id - b.id);
+					setProjects(sortedData);
+				}
+			} catch (err) {
+				console.error("Failed to load projects:", err);
+				setError(
+					err instanceof Error
+						? err.message
+						: "Failed to load projects",
+				);
 			}
 		};
 		getProjects();
@@ -37,7 +51,11 @@ export default function ProjectsSection({ variants, transition }: Props) {
 	return (
 		<motion.section variants={variants} transition={transition}>
 			<h3 className="mb-5 text-lg font-medium">Project</h3>
-
+			{error && (
+				<div className="mb-4 rounded bg-red-100 p-3 text-sm text-red-800 dark:bg-red-900 dark:text-red-200">
+					{error}
+				</div>
+			)}
 			<div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 sm:justify-items-start">
 				{projects?.map((project: Project) => (
 					<MorphingDialog
@@ -102,8 +120,6 @@ export default function ProjectsSection({ variants, transition }: Props) {
 												y: 100,
 											},
 										}}>
-				
-
 										<a
 											className="mt-2 inline-flex text-zinc-500 underline"
 											href={project.project_url}
