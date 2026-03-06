@@ -1,15 +1,16 @@
 {
-	"name": "Nguyen Duc Nhat",
+	"name": "ngducnhat-portfolio",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build --webpack",
+		"build": "prisma generate && next build --webpack",
 		"start": "next start",
 		"lint": "next lint",
 		"prt": "npx prettier --write .",
 		"prisma:migrate": "prisma migrate dev",
-		"prisma:seed": "ts-node --esm prisma/seed.ts"
+		"prisma:seed": "ts-node --esm prisma/seed.ts",
+        "postinstall": "prisma generate"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.1003.0",
