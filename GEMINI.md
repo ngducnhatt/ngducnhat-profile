@@ -26,6 +26,7 @@
 - Các phần của backend cần tối giản chính xác, đặt tên phải phù hợp
 - Các component cần có sự thống nhất, các css của tailwinds cần áp dụng 1 bảng màu chung thống nhất ở 1 file sau đó dùng lại ở các file khác
 - Sau khi làm xong tạo 1 file README.MD để giúp người dùng hiểu rõ dự án, và cần triển khai những gì, chức năng dự án vv
+- đánh dấu các thay đổi thành các version, có thay đổi trong package nhé
 
 ## 📁 Cấu trúc quan trọng
 
