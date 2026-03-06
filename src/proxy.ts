@@ -5,10 +5,10 @@ import * as jose from "jose";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "ngducnhat-secret-key-2026");
 
 /**
- * Middleware bảo vệ các tuyến đường /admin và /dashboard.
+ * Proxy bảo vệ các tuyến đường /admin và /dashboard.
  * Đồng thời tự động chuyển hướng người dùng đã đăng nhập khi vào /login.
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 	const token = request.cookies.get("auth_token")?.value;
 	const { pathname } = request.nextUrl;
 
