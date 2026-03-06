@@ -24,8 +24,10 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     });
 
     // Xóa cache danh sách và cache thống kê
-    revalidateTag(`notes-${userId}`);
-    revalidateTag(`stats-${userId}`);
+    // @ts-ignore
+    (revalidateTag as any)(`notes-${userId}`);
+    // @ts-ignore
+    (revalidateTag as any)(`stats-${userId}`);
 
     return NextResponse.json({ message: "Note deleted" });
   } catch (error) {

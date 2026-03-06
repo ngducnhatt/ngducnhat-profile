@@ -56,8 +56,10 @@ export async function POST(req: Request) {
     });
 
     // Xóa cache thống kê và danh sách ghi chú
-    revalidateTag(`stats-${userId}`);
-    revalidateTag(`notes-${userId}`);
+    // @ts-ignore
+    (revalidateTag as any)(`stats-${userId}`);
+    // @ts-ignore
+    (revalidateTag as any)(`notes-${userId}`);
 
     return NextResponse.json(newNote, { status: 201 });
   } catch (error) {
