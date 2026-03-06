@@ -23,8 +23,9 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
       where: { id, userId },
     });
 
-    // @ts-ignore - Khắc phục lỗi Type mismatch trong phiên bản Next.js hiện tại
+    // Xóa cache danh sách và cache thống kê
     revalidateTag(`notes-${userId}`);
+    revalidateTag(`stats-${userId}`);
 
     return NextResponse.json({ message: "Note deleted" });
   } catch (error) {

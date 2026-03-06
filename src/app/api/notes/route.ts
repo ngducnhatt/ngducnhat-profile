@@ -55,7 +55,8 @@ export async function POST(req: Request) {
       data: { title, content, userId },
     });
 
-    // @ts-ignore - Khắc phục lỗi Type mismatch trong phiên bản Next.js hiện tại
+    // Xóa cache thống kê và danh sách ghi chú
+    revalidateTag(`stats-${userId}`);
     revalidateTag(`notes-${userId}`);
 
     return NextResponse.json(newNote, { status: 201 });
