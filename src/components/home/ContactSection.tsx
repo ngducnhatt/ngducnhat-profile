@@ -9,7 +9,7 @@ function useSiteInfo() {
 	return useSWR<{
 		email: string;
 		social_links: { label: string; link: string }[];
-	}>("/api/data/site", fetcher);
+	}>("/api/data/contacts", fetcher);
 }
 import { Magnetic } from "@/components/motion-primitives/magnetic";
 

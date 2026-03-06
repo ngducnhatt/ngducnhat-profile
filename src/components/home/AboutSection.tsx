@@ -14,22 +14,20 @@ export default function AboutSection({ variants, transition }: Props) {
 					<li className="flex items-start gap-2">
 						<span className="mt-0.5">-</span>
 						<span>
-							I specialize in web development technologies,
-							including JavaScript, React, and more.
+							I am a Web Developer focused on website interface design, application security, and user experience. I build web applications with modern interfaces, high performance, good scalability, and maintainable code.
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
 						<span className="mt-0.5">-</span>
 						<span>
-							I'm continuously expanding my knowledge in both
-							Frontend and Backend technologies.
+							I have experience working across different parts of web systems, from interface design and user experience optimization (UI/UX) to backend development, API development, database integration, and system deployment.
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
 						<span className="mt-0.5">-</span>
 						<span>
-							I actively create and manage Discord-related
-							projects, such as bots, servers, and applications.
+							The technologies I mainly use include: Next.js, React, Tailwind CSS, and Node.js.
+                            <br />I also work with both SQL and NoSQL databases, including: MySQL, Supabase, Neon Database, and MongoDB.
 						</span>
 					</li>
 				</ul>

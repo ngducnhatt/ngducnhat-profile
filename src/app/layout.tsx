@@ -21,6 +21,11 @@ export const metadata: Metadata = {
         template: '%s | Nguyen Duc Nhat',
     },
     description: 'Nguyen Duc Nhat is a web developer.',
+    icons: {
+        icon: '/logo.svg',
+        shortcut: '/logo.png',
+        apple: '/logo.png',
+    }
 }
 
 const geist = Geist({

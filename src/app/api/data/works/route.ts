@@ -1,20 +1,17 @@
-import { NextResponse } from "next/server";
 import { fetchWork } from "@/lib/data";
+import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
 	try {
-		const data = await fetchWork();
-		return NextResponse.json(data);
-	} catch (err) {
-		console.error("Failed to fetch work experience:", err);
-		return NextResponse.json(
-			{
-				error:
-					err instanceof Error
-						? err.message
-						: "Failed to fetch work experience",
+		const works = await fetchWork();
+		return NextResponse.json(works, {
+			headers: {
+				"Cache-Control": "public, s-maxage=3600, stale-while-revalidate=59",
 			},
-			{ status: 500 },
-		);
+		});
+	} catch (err) {
+		return NextResponse.json({ error: "Failed to fetch works" }, { status: 500 });
 	}
 }
